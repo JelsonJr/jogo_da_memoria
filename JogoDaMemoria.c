@@ -1,16 +1,20 @@
-//Jogo da memória - Feito apenas até a parte das jogadas do jogador, sem sistema de pontuação ou finalização do jogo.
+/*
+Jogo da memoria - Feito apenas ate a parte das jogadas
+do jogador, sem sistema de pontuacao ou finalizacao do jogo
+    Jelson A. Rodrigues Junior
+    Lucas Vinicius M. P. S. L Morais
+    Otavio Luiz
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <windows.h> //para função Sleep();
-#define N 8
-#define M 4
+#include <windows.h> //para funcao Sleep();
+#include "JogoDaMemoria.h"
 
 char tabuleiro[M][M];
 char auxiliar[M][M];
-char cartas[N] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-int i, j, virar;
+char cartas[NUMERO_DE_CARTAS] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
 
 void resetaTabuleiro(){
     for(int i = 0; i<4; i++){
@@ -22,8 +26,9 @@ void resetaTabuleiro(){
 }
 
 void imprimeTabuleiro(){
+    int i, j;
     srand(time(NULL));
-    for(int a = 0; a<N; a++){
+    for(int a = 0; a<NUMERO_DE_CARTAS; a++){
 
         i = rand()% M;
         j = rand()% M;
@@ -73,22 +78,22 @@ void imprimeTabuleiroVirado(){
 
 }
 
-struct coordenadas{     //Este struct serve para "empacotar" variáveis da funcao tentativaUsuario(), facilitando a leitura do código.
-    int linha, coluna;
-};
+
 
 int validarProximaRodada(){
     for(int i = 0; i<4; i++){
         for(int j = 0; j<4; j++){
             if(auxiliar[i][j] == '*'){
-                return 0;
+                return 1;
             }
         }
     }
+
+    return 0;
 }
 
 void tentativaUsuario(){
-    struct coordenadas c1, c2; //c1 e c2 são variáveis para cada empacotamento das variáveis "linha" e "coluna" do struct "coordenadas".
+    struct coordenadas c1, c2; //c1 e c2 sï¿½o variï¿½veis para cada empacotamento das variï¿½veis "linha" e "coluna" do struct "coordenadas".
     do{
         printf("\nInsira qual posicao deseja selecionar. - (Linha 1-4, Coluna 1-4)\n");
         fflush(stdin);
@@ -144,11 +149,13 @@ void tentativaUsuario(){
         }
 
 
-    }while(validarProximaRodada() == 0);
+    } while(!validarProximaRodada());
 
 }
 
 int main(){
+    int virar;
+
     resetaTabuleiro();
     printf("Voce tera 13 segundos para memorizar o tabuleiro - (Aperte 1 para confirmar)\n");
     do{
@@ -162,11 +169,10 @@ int main(){
     }while(virar != 1);
 
     printf("\nMemorize!\n");
-    Sleep(5000); //Usuário tem 13 segundos para memorizar o tabuleiro
+    Sleep(13000); //UsuArio tem 13 segundos para memorizar o tabuleiro
+    
     imprimeTabuleiroVirado();
-
     tentativaUsuario();
 
-
-return 0;
+    return 0;
 }
