@@ -12,8 +12,7 @@
 #include <windows.h> //para funcao Sleep();
 #include "JogoDaMemoria.h"
 
-char tabuleiro[LINHA][COLUNA];
-char auxiliar[LINHA][COLUNA];
+char tabuleiro[LINHA][COLUNA], auxiliar[LINHA][COLUNA];
 char cartas[NUMERO_DE_CARTAS] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
 
 void resetaTabuleiro(){
@@ -52,11 +51,8 @@ void copiaTabuleiro(char matrizOriginal[LINHA][COLUNA], char matrizCopia[LINHA][
 
 void desenhaTabuleiro(int viradoOuNao) {
     char tabuleiroCopia[LINHA][COLUNA];
-    if (viradoOuNao)
-        copiaTabuleiro(auxiliar, tabuleiroCopia);
-    else
-        copiaTabuleiro(tabuleiro, tabuleiroCopia);
-
+    viradoOuNao? copiaTabuleiro(auxiliar, tabuleiroCopia) : copiaTabuleiro(tabuleiro, tabuleiroCopia);
+    
     system("cls");
     printf(" %c | %c | %c | %c \n", tabuleiroCopia[0][0], tabuleiroCopia[0][1], tabuleiroCopia[0][2], tabuleiroCopia[0][3]);
     printf("---------------\n");
@@ -104,7 +100,7 @@ void tentativaUsuario(){
         }
         auxiliar[c1.linha][c1.coluna] = tabuleiro[c1.linha][c1.coluna];
         desenhaTabuleiro(1);
-
+    ////////////////////////////////////////////////////// dividir em função
         printf("\nInsira qual posicao deseja selecionar. - (Linha 1-4, Coluna 1-4)\n");
         fflush(stdin);
         scanf("%d %d", &c2.linha, &c2.coluna);
@@ -123,7 +119,7 @@ void tentativaUsuario(){
         auxiliar[c2.linha][c2.coluna] = tabuleiro[c2.linha][c2.coluna];
         desenhaTabuleiro(1);
 
-        if((auxiliar[c2.linha][c2.coluna] != auxiliar[c1.linha][c1.coluna]) || (c2.linha == c1.linha && c2.coluna == c1.coluna)){
+        if((auxiliar[c2.linha][c2.coluna] != auxiliar[c1.linha][c1.coluna]) || (c2.linha == c1.linha && c2.coluna == c1.coluna)){ // deixar essa struct global e fazer a comparação em outra função
             printf("\nVoce errou!");
             Sleep(2000);
             auxiliar[c1.linha][c1.coluna] = '*';
