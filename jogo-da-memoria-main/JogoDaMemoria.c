@@ -24,17 +24,18 @@ void resetaTabuleiro(){
     }
 }
 
+void atribuiValorAsCartas(int *cartasLinha, int *cartasColuna) {
+    srand(time(NULL));
+    *cartasLinha = rand()% LINHA; *cartasColuna = rand()% COLUNA;
+}
+
 void distribuiCartasNoTabuleiro() {
     int cartasLinha, cartasColuna;
-    srand(time(NULL));
     for (int a = 0; a < NUMERO_DE_CARTAS; a++) {
-        cartasLinha = rand()% LINHA;
-        cartasColuna = rand()% COLUNA;
-
+        atribuiValorAsCartas(&cartasLinha, &cartasColuna);
         if(tabuleiro[cartasLinha][cartasColuna] != ' ') {
-            do{
-                cartasLinha = rand()% LINHA;
-                cartasColuna = rand()% COLUNA;
+            do { 
+                atribuiValorAsCartas(&cartasLinha, &cartasColuna); 
             } while(tabuleiro[cartasLinha][cartasColuna] != ' ');
         }
         tabuleiro[cartasLinha][cartasColuna] = cartas[a];
@@ -143,7 +144,6 @@ void iniciarJogo() {
         virar == 1 ? imprimeTabuleiro() :
             printf("Voce precisa confirmar para o jogo iniciar! (Aperte 1 para confirmar)\n");
     } while(virar != 1);
-
     printf("\nMemorize!\n");
     Sleep(10000); //Usuario tem 10 segundos para memorizar o tabuleiro
 }

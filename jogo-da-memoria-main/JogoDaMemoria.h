@@ -11,6 +11,7 @@ struct coordenadas {
 typedef struct coordenadas COORDENADAS;
 
 int ganhar();
+void atribuiValorAsCartas(int *cartasLinha, int *cartasColuna);
 void iniciarJogo();
 void distribuiCartasNoTabuleiro();
 void resetaTabuleiro();
